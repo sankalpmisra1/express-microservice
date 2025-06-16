@@ -1,0 +1,23 @@
+{
+  "name": "express-microservice",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "services/*"
+  ],
+  "scripts": {
+    "start:user": "npm --workspace=user-service run start",
+    "start:post": "npm --workspace=post-service run start",
+    "dev:user": "npm --workspace=user-service run dev",
+    "dev:post": "npm --workspace=post-service run dev"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.x",
+    "prettier": "^2.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

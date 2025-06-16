@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  user-service:
+    build: ./services/user-service
+    ports:
+      - "3001:3000"
+    depends_on:
+      - user-db
+    environment:
+      - DB_HOST=user-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=users
+      - NODE_ENV=production
+      - PORT=3000
+  post-service:
+    build: ./services/post-service
+    ports:
+      - "3002:3000"
+    depends_on:
+      - post-db
+      - user-service
+    environment:
+      - DB_HOST=post-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=posts
+      - NODE_ENV=production
+      - PORT=3000
+      - USER_SERVICE_URL=http://user-service:3000
+  user-db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+  post-db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: posts
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
