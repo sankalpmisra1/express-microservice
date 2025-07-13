@@ -27,6 +27,11 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=posts
+      - SESSION_DB_HOST=user-db             # 👈 NEW
+      - SESSION_DB_PORT=5432
+      - SESSION_DB_USER=postgres
+      - SESSION_DB_PASSWORD=postgres
+      - SESSION_DB_NAME=users
       - NODE_ENV=production
       - PORT=3000
       - USER_SERVICE_URL=http://user-service:3000
@@ -38,6 +43,8 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5433:5432"
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
   post-db:
     image: postgres:14
     environment:
@@ -46,3 +53,8 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5434:5432"
+    volumes:
+      - post_db_data:/var/lib/postgresql/data
+volumes:
+  user_db_data:
+  post_db_data:
