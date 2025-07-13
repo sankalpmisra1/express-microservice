@@ -27,6 +27,13 @@ jobs:
         run: |
           cd services/${{ matrix.service }}
           yarn install --frozen-lockfile
+
+      - name: Auto-fix formatting & lint
+        run: |
+          cd services/${{ matrix.service }}
+          npx prettier --write .
+          npx eslint "src/**/*.js" --fix
+
       - name: Run Formatter
         run: |
           cd services/${{ matrix.service }}
